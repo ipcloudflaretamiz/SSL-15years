@@ -74,7 +74,7 @@ while true; do
                 echo "Please select a file to edit:"
                 echo "1) cert.crt (/var/lib/marzban/certs/cert.crt)"
                 echo "2) private.key (/var/lib/marzban/certs/private.key)"
-                echo "3) Edit SSL settings (/opt/marzban/.env)"
+                echo "3) Update SSL settings (/opt/marzban/.env)"
                 echo "4) Back to main menu"
                 echo "========================================"
 
@@ -90,7 +90,7 @@ while true; do
                         nano /var/lib/marzban/certs/private.key
                         ;;
                     3)
-                        echo "Opening nano /opt/marzban/.env..."
+                        echo "Updating SSL settings in /opt/marzban/.env..."
                         
                         if [ ! -f /opt/marzban/.env ]; then
                             echo "File /opt/marzban/.env does not exist. Creating it..."
@@ -98,23 +98,26 @@ while true; do
                             touch /opt/marzban/.env
                         fi
 
-                       
-                        if grep -q "UVICORN_SSL_CERTFILE" /opt/marzban/.env && grep -q "UVICORN_SSL_KEYFILE" /opt/marzban/.env; then
-                            
-                            sed -i 's/^#*UVICORN_SSL_CERTFILE/UVICORN_SSL_CERTFILE/' /opt/marzban/.env
-                            sed -i 's/^#*UVICORN_SSL_KEYFILE/UVICORN_SSL_KEYFILE/' /opt/marzban/.env
-                        else
+                        
+                        if grep -q "UVICORN_SSL_CERTFILE" /opt/marzban/.env; then
                            
-                            echo 'UVICORN_SSL_CERTFILE="/var/lib/marzban/certs/example.com/fullchain.pem"' >> /opt/marzban/.env
-                            echo 'UVICORN_SSL_KEYFILE="/var/lib/marzban/certs/example.com/key.pem"' >> /opt/marzban/.env
+                            sed -i '/UVICORN_SSL_CERTFILE/d' /opt/marzban/.env
                         fi
+                        echo 'UVICORN_SSL_CERTFILE="/var/lib/marzban/certs/example.com/fullchain.pem"' >> /opt/marzban/.env
+
+                        if grep -q "UVICORN_SSL_KEYFILE" /opt/marzban/.env; then
+                            
+                            sed -i '/UVICORN_SSL_KEYFILE/d' /opt/marzban/.env
+                        fi
+                        echo 'UVICORN_SSL_KEYFILE="/var/lib/marzban/certs/example.com/key.pem"' >> /opt/marzban/.env
+
+                        echo "SSL settings updated successfully."
 
                         
-                        nano /opt/marzban/.env
-
                         echo "Restarting Marzban..."
                         marzban restart
                         echo "Marzban restarted successfully."
+                        read -p "Press Enter to continue..."
                         ;;
                     4)
                         echo "Returning to main menu..."
@@ -150,11 +153,11 @@ while true; do
                 case $subchoice in
                     1)
                         echo "Opening nano /var/lib/marzneshin/certs/cert.crt..."
-                        nano /var/lib/marzneshin/certs/cert.crt
+                        nano /var/lib/marzban/certs/cert.crt
                         ;;
                     2)
                         echo "Opening nano /var/lib/marzneshin/certs/private.key..."
-                        nano /var/lib/marzneshin/certs/private.key
+                        nano /var/lib/marzban/certs/private.key
                         ;;
                     3)
                         echo "Returning to main menu..."
