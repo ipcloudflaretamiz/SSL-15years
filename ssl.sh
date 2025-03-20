@@ -13,7 +13,7 @@ display_main_menu() {
     echo "========================================"
 }
 
-
+# Main loop
 while true; do
     display_main_menu
     read -p "Enter your choice (1-4): " choice
@@ -98,16 +98,20 @@ while true; do
                             touch /opt/marzban/.env
                         fi
 
-                       
-                        if grep -q 'UVICORN_SSL_CERTFILE="/var/lib/marzban/certs/example.com/fullchain.pem"' /opt/marzban/.env; then
-                            sed -i '/UVICORN_SSL_CERTFILE="\/var\/lib\/marzban\/certs\/example.com\/fullchain.pem"/d' /opt/marzban/.env
+                        
+                        if grep -E '^#?UVICORN_SSL_CERTFILE="/var/lib/marzban/certs/example.com/fullchain.pem"' /opt/marzban/.env; then
+                            sed -i '\|^#*UVICORN_SSL_CERTFILE="/var/lib/marzban/certs/example.com/fullchain.pem"|d' /opt/marzban/.env
                             echo "Removed UVICORN_SSL_CERTFILE line with example.com/fullchain.pem."
+                        else
+                            echo "UVICORN_SSL_CERTFILE line with example.com/fullchain.pem not found."
                         fi
 
-                       
-                        if grep -q 'UVICORN_SSL_KEYFILE="/var/lib/marzban/certs/example.com/key.pem"' /opt/marzban/.env; then
-                            sed -i '/UVICORN_SSL_KEYFILE="\/var\/lib\/marzban\/certs\/example.com\/key.pem"/d' /opt/marzban/.env
+                        
+                        if grep -E '^#?UVICORN_SSL_KEYFILE="/var/lib/marzban/certs/example.com/key.pem"' /opt/marzban/.env; then
+                            sed -i '\|^#*UVICORN_SSL_KEYFILE="/var/lib/marzban/certs/example.com/key.pem"|d' /opt/marzban/.env
                             echo "Removed UVICORN_SSL_KEYFILE line with example.com/key.pem."
+                        else
+                            echo "UVICORN_SSL_KEYFILE line with example.com/key.pem not found."
                         fi
 
                         
@@ -118,7 +122,7 @@ while true; do
 
                         echo "SSL settings updated successfully."
 
-                       
+                        
                         echo "Restarting Marzban..."
                         marzban restart
                         echo "Marzban restarted successfully."
