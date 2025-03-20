@@ -13,7 +13,7 @@ display_main_menu() {
     echo "========================================"
 }
 
-# Main loop
+
 while true; do
     display_main_menu
     read -p "Enter your choice (1-4): " choice
@@ -98,39 +98,23 @@ while true; do
                             touch /opt/marzban/.env
                         fi
 
-                        
-                        if grep -q "UVICORN_SSL_CERTFILE" /opt/marzban/.env; then
-                           
-                            if grep -q "^#UVICORN_SSL_CERTFILE" /opt/marzban/.env; then
-                               
-                                sed -i 's/^#UVICORN_SSL_CERTFILE/UVICORN_SSL_CERTFILE/' /opt/marzban/.env
-                                echo "Removed # from UVICORN_SSL_CERTFILE line."
-                            else
-                               
-                                sed -i '/^UVICORN_SSL_CERTFILE/d' /opt/marzban/.env
-                                echo "Removed old UVICORN_SSL_CERTFILE line to append new one at the end."
-                            fi
-                        fi
                        
-                        echo 'UVICORN_SSL_CERTFILE="/var/lib/marzban/certs/cert.crt"' >> /opt/marzban/.env
-                        echo "Added/Updated UVICORN_SSL_CERTFILE at the end of the file."
+                        if grep -q 'UVICORN_SSL_CERTFILE="/var/lib/marzban/certs/example.com/fullchain.pem"' /opt/marzban/.env; then
+                            sed -i '/UVICORN_SSL_CERTFILE="\/var\/lib\/marzban\/certs\/example.com\/fullchain.pem"/d' /opt/marzban/.env
+                            echo "Removed UVICORN_SSL_CERTFILE line with example.com/fullchain.pem."
+                        fi
 
                        
-                        if grep -q "UVICORN_SSL_KEYFILE" /opt/marzban/.env; then
-                           
-                            if grep -q "^#UVICORN_SSL_KEYFILE" /opt/marzban/.env; then
-                               
-                                sed -i 's/^#UVICORN_SSL_KEYFILE/UVICORN_SSL_KEYFILE/' /opt/marzban/.env
-                                echo "Removed # from UVICORN_SSL_KEYFILE line."
-                            else
-                               
-                                sed -i '/^UVICORN_SSL_KEYFILE/d' /opt/marzban/.env
-                                echo "Removed old UVICORN_SSL_KEYFILE line to append new one at the end."
-                            fi
+                        if grep -q 'UVICORN_SSL_KEYFILE="/var/lib/marzban/certs/example.com/key.pem"' /opt/marzban/.env; then
+                            sed -i '/UVICORN_SSL_KEYFILE="\/var\/lib\/marzban\/certs\/example.com\/key.pem"/d' /opt/marzban/.env
+                            echo "Removed UVICORN_SSL_KEYFILE line with example.com/key.pem."
                         fi
+
                         
+                        echo 'UVICORN_SSL_CERTFILE="/var/lib/marzban/certs/cert.crt"' >> /opt/marzban/.env
+                        echo "Added new UVICORN_SSL_CERTFILE at the end of the file."
                         echo 'UVICORN_SSL_KEYFILE="/var/lib/marzban/certs/private.key"' >> /opt/marzban/.env
-                        echo "Added/Updated UVICORN_SSL_KEYFILE at the end of the file."
+                        echo "Added new UVICORN_SSL_KEYFILE at the end of the file."
 
                         echo "SSL settings updated successfully."
 
