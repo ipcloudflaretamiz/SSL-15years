@@ -100,16 +100,39 @@ while true; do
 
                         
                         if grep -q "UVICORN_SSL_CERTFILE" /opt/marzban/.env; then
+                            
+                            if grep -q "^#UVICORN_SSL_CERTFILE" /opt/marzban/.env; then
+                                
+                                sed -i 's/^#UVICORN_SSL_CERTFILE/UVICORN_SSL_CERTFILE/' /opt/marzban/.env
+                                echo "Removed # from UVICORN_SSL_CERTFILE line."
+                            else
+                                
+                                sed -i 's|^UVICORN_SSL_CERTFILE=.*|UVICORN_SSL_CERTFILE="/var/lib/marzban/certs/example.com/fullchain.pem"|' /opt/marzban/.env
+                                echo "Updated UVICORN_SSL_CERTFILE address."
+                            fi
+                        else
                            
-                            sed -i '/UVICORN_SSL_CERTFILE/d' /opt/marzban/.env
+                            echo 'UVICORN_SSL_CERTFILE="/var/lib/marzban/certs/example.com/fullchain.pem"' >> /opt/marzban/.env
+                            echo "Added UVICORN_SSL_CERTFILE line."
                         fi
-                        echo 'UVICORN_SSL_CERTFILE="/var/lib/marzban/certs/example.com/fullchain.pem"' >> /opt/marzban/.env
 
+                       
                         if grep -q "UVICORN_SSL_KEYFILE" /opt/marzban/.env; then
                             
-                            sed -i '/UVICORN_SSL_KEYFILE/d' /opt/marzban/.env
+                            if grep -q "^#UVICORN_SSL_KEYFILE" /opt/marzban/.env; then
+                                
+                                sed -i 's/^#UVICORN_SSL_KEYFILE/UVICORN_SSL_KEYFILE/' /opt/marzban/.env
+                                echo "Removed # from UVICORN_SSL_KEYFILE line."
+                            else
+                               
+                                sed -i 's|^UVICORN_SSL_KEYFILE=.*|UVICORN_SSL_KEYFILE="/var/lib/marzban/certs/example.com/key.pem"|' /opt/marzban/.env
+                                echo "Updated UVICORN_SSL_KEYFILE address."
+                            fi
+                        else
+                           
+                            echo 'UVICORN_SSL_KEYFILE="/var/lib/marzban/certs/example.com/key.pem"' >> /opt/marzban/.env
+                            echo "Added UVICORN_SSL_KEYFILE line."
                         fi
-                        echo 'UVICORN_SSL_KEYFILE="/var/lib/marzban/certs/example.com/key.pem"' >> /opt/marzban/.env
 
                         echo "SSL settings updated successfully."
 
