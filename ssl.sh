@@ -74,10 +74,11 @@ while true; do
                 echo "Please select a file to edit:"
                 echo "1) cert.crt (/var/lib/marzban/certs/cert.crt)"
                 echo "2) private.key (/var/lib/marzban/certs/private.key)"
-                echo "3) Back to main menu"
+                echo "3) Edit SSL settings (/opt/marzban/.env)"
+                echo "4) Back to main menu"
                 echo "========================================"
 
-                read -p "Enter your choice (1-3): " subchoice
+                read -p "Enter your choice (1-4): " subchoice
 
                 case $subchoice in
                     1)
@@ -89,11 +90,38 @@ while true; do
                         nano /var/lib/marzban/certs/private.key
                         ;;
                     3)
+                        echo "Opening nano /opt/marzban/.env..."
+                        
+                        if [ ! -f /opt/marzban/.env ]; then
+                            echo "File /opt/marzban/.env does not exist. Creating it..."
+                            mkdir -p /opt/marzban
+                            touch /opt/marzban/.env
+                        fi
+
+                       
+                        if grep -q "UVICORN_SSL_CERTFILE" /opt/marzban/.env && grep -q "UVICORN_SSL_KEYFILE" /opt/marzban/.env; then
+                            
+                            sed -i 's/^#*UVICORN_SSL_CERTFILE/UVICORN_SSL_CERTFILE/' /opt/marzban/.env
+                            sed -i 's/^#*UVICORN_SSL_KEYFILE/UVICORN_SSL_KEYFILE/' /opt/marzban/.env
+                        else
+                           
+                            echo 'UVICORN_SSL_CERTFILE="/var/lib/marzban/certs/example.com/fullchain.pem"' >> /opt/marzban/.env
+                            echo 'UVICORN_SSL_KEYFILE="/var/lib/marzban/certs/example.com/key.pem"' >> /opt/marzban/.env
+                        fi
+
+                        
+                        nano /opt/marzban/.env
+
+                        echo "Restarting Marzban..."
+                        marzban restart
+                        echo "Marzban restarted successfully."
+                        ;;
+                    4)
                         echo "Returning to main menu..."
                         break  
                         ;;
                     *)
-                        echo "Invalid choice! Please select a number between 1 and 3."
+                        echo "Invalid choice! Please select a number between 1 and 4."
                         read -p "Press Enter to continue..."
                         ;;
                 esac
