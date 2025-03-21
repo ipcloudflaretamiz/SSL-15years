@@ -98,19 +98,20 @@ while true; do
                             touch /opt/marzban/.env
                         fi
 
-                        # Check if the lines exist, and comment them if they do
-                        if grep -E '^#?UVICORN_SSL_CERTFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/example.com/fullchain.pem"' /opt/marzban/.env; then
-                            sed -i 's|^UVICORN_SSL_CERTFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/example.com/fullchain.pem"|#&|' /opt/marzban/.env
-                            echo "Commented UVICORN_SSL_CERTFILE line."
+                        # Comment out any line that starts with UVICORN_SSL_CERTFILE
+                        if grep -E '^#?UVICORN_SSL_CERTFILE' /opt/marzban/.env; then
+                            sed -i 's|^UVICORN_SSL_CERTFILE|#UVICORN_SSL_CERTFILE|' /opt/marzban/.env
+                            echo "Commented out UVICORN_SSL_CERTFILE line."
                         else
-                            echo "UVICORN_SSL_CERTFILE line with example.com/fullchain.pem not found."
+                            echo "No UVICORN_SSL_CERTFILE line found."
                         fi
 
-                        if grep -E '^#?UVICORN_SSL_KEYFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/example.com/key.pem"' /opt/marzban/.env; then
-                            sed -i 's|^UVICORN_SSL_KEYFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/example.com/key.pem"|#&|' /opt/marzban/.env
-                            echo "Commented UVICORN_SSL_KEYFILE line."
+                        # Comment out any line that starts with UVICORN_SSL_KEYFILE
+                        if grep -E '^#?UVICORN_SSL_KEYFILE' /opt/marzban/.env; then
+                            sed -i 's|^UVICORN_SSL_KEYFILE|#UVICORN_SSL_KEYFILE|' /opt/marzban/.env
+                            echo "Commented out UVICORN_SSL_KEYFILE line."
                         else
-                            echo "UVICORN_SSL_KEYFILE line with example.com/key.pem not found."
+                            echo "No UVICORN_SSL_KEYFILE line found."
                         fi
 
                         # Append the new lines at the end of the file
