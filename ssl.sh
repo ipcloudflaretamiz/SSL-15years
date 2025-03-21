@@ -98,7 +98,7 @@ while true; do
                             touch /opt/marzban/.env
                         fi
 
-                        # Comment out any line that starts with UVICORN_SSL_CERTFILE (handling spaces after the variable)
+                        # Comment out any line that starts with UVICORN_SSL_CERTFILE (handling spaces before and after the variable)
                         if grep -E '^[[:space:]]*UVICORN_SSL_CERTFILE[[:space:]]*=' /opt/marzban/.env; then
                             sed -i 's|^[[:space:]]*UVICORN_SSL_CERTFILE[[:space:]]*=|#UVICORN_SSL_CERTFILE|' /opt/marzban/.env
                             echo "Commented out UVICORN_SSL_CERTFILE line."
@@ -106,7 +106,7 @@ while true; do
                             echo "No UVICORN_SSL_CERTFILE line found."
                         fi
 
-                        # Comment out any line that starts with UVICORN_SSL_KEYFILE (handling spaces after the variable)
+                        # Comment out any line that starts with UVICORN_SSL_KEYFILE (handling spaces before and after the variable)
                         if grep -E '^[[:space:]]*UVICORN_SSL_KEYFILE[[:space:]]*=' /opt/marzban/.env; then
                             sed -i 's|^[[:space:]]*UVICORN_SSL_KEYFILE[[:space:]]*=|#UVICORN_SSL_KEYFILE|' /opt/marzban/.env
                             echo "Commented out UVICORN_SSL_KEYFILE line."
