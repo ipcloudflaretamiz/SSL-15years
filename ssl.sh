@@ -98,7 +98,7 @@ while true; do
                             touch /opt/marzban/.env
                         fi
 
-                        # Remove specific UVICORN_SSL_CERTFILE line (with underscores, with or without #, with or without spaces around =)
+                        # Remove specific UVICORN_SSL_CERTFILE line (with or without #, with or without spaces around =)
                         if grep -E '^#?UVICORN_SSL_CERTFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/example.com/fullchain.pem"' /opt/marzban/.env; then
                             sed -i '\|^#*UVICORN_SSL_CERTFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/example.com/fullchain.pem"|d' /opt/marzban/.env
                             echo "Removed UVICORN_SSL_CERTFILE line with example.com/fullchain.pem."
@@ -106,44 +106,12 @@ while true; do
                             echo "UVICORN_SSL_CERTFILE line with example.com/fullchain.pem not found."
                         fi
 
-                        # Remove UVICORN_SSL_CERTFILE line for cert.crt (with underscores, with or without #, with or without spaces around =)
-                        if grep -E '^#?UVICORN_SSL_CERTFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/cert.crt"' /opt/marzban/.env; then
-                            sed -i '\|^#*UVICORN_SSL_CERTFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/cert.crt"|d' /opt/marzban/.env
-                            echo "Removed UVICORN_SSL_CERTFILE line with cert.crt."
-                        else
-                            echo "UVICORN_SSL_CERTFILE line with cert.crt not found."
-                        fi
-
-                        # Remove UVICORN SSL CERTFILE line for cert.crt (with spaces, with or without #, with or without spaces around =)
-                        if grep -E '^#?UVICORN SSL CERTFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/cert.crt"' /opt/marzban/.env; then
-                            sed -i '\|^#*UVICORN SSL CERTFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/cert.crt"|d' /opt/marzban/.env
-                            echo "Removed UVICORN SSL CERTFILE line with cert.crt."
-                        else
-                            echo "UVICORN SSL CERTFILE line with cert.crt not found."
-                        fi
-
-                        # Remove specific UVICORN_SSL_KEYFILE line (with underscores, with or without #, with or without spaces around =)
+                        # Remove specific UVICORN_SSL_KEYFILE line (with or without #, with or without spaces around =)
                         if grep -E '^#?UVICORN_SSL_KEYFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/example.com/key.pem"' /opt/marzban/.env; then
                             sed -i '\|^#*UVICORN_SSL_KEYFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/example.com/key.pem"|d' /opt/marzban/.env
                             echo "Removed UVICORN_SSL_KEYFILE line with example.com/key.pem."
                         else
                             echo "UVICORN_SSL_KEYFILE line with example.com/key.pem not found."
-                        fi
-
-                        # Remove UVICORN_SSL_KEYFILE line for private.key (with underscores, with or without #, with or without spaces around =)
-                        if grep -E '^#?UVICORN_SSL_KEYFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/private.key"' /opt/marzban/.env; then
-                            sed -i '\|^#*UVICORN_SSL_KEYFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/private.key"|d' /opt/marzban/.env
-                            echo "Removed UVICORN_SSL_KEYFILE line with private.key."
-                        else
-                            echo "UVICORN_SSL_KEYFILE line with private.key not found."
-                        fi
-
-                        # Remove UVICORN SSL KEYFILE line for private.key (with spaces, with or without #, with or without spaces around =)
-                        if grep -E '^#?UVICORN SSL KEYFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/private.key"' /opt/marzban/.env; then
-                            sed -i '\|^#*UVICORN SSL KEYFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/private.key"|d' /opt/marzban/.env
-                            echo "Removed UVICORN SSL KEYFILE line with private.key."
-                        else
-                            echo "UVICORN SSL KEYFILE line with private.key not found."
                         fi
 
                         # Append the new lines at the end of the file
