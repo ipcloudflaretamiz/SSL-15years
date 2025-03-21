@@ -98,18 +98,17 @@ while true; do
                             touch /opt/marzban/.env
                         fi
 
-                        # Remove specific UVICORN_SSL_CERTFILE line (with or without #, with or without spaces around =)
+                        # Check if the lines exist, and comment them if they do
                         if grep -E '^#?UVICORN_SSL_CERTFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/example.com/fullchain.pem"' /opt/marzban/.env; then
-                            sed -i '\|^#*UVICORN_SSL_CERTFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/example.com/fullchain.pem"|d' /opt/marzban/.env
-                            echo "Removed UVICORN_SSL_CERTFILE line with example.com/fullchain.pem."
+                            sed -i 's|^UVICORN_SSL_CERTFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/example.com/fullchain.pem"|#&|' /opt/marzban/.env
+                            echo "Commented UVICORN_SSL_CERTFILE line."
                         else
                             echo "UVICORN_SSL_CERTFILE line with example.com/fullchain.pem not found."
                         fi
 
-                        # Remove specific UVICORN_SSL_KEYFILE line (with or without #, with or without spaces around =)
                         if grep -E '^#?UVICORN_SSL_KEYFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/example.com/key.pem"' /opt/marzban/.env; then
-                            sed -i '\|^#*UVICORN_SSL_KEYFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/example.com/key.pem"|d' /opt/marzban/.env
-                            echo "Removed UVICORN_SSL_KEYFILE line with example.com/key.pem."
+                            sed -i 's|^UVICORN_SSL_KEYFILE[[:space:]]*=[[:space:]]*"/var/lib/marzban/certs/example.com/key.pem"|#&|' /opt/marzban/.env
+                            echo "Commented UVICORN_SSL_KEYFILE line."
                         else
                             echo "UVICORN_SSL_KEYFILE line with example.com/key.pem not found."
                         fi
