@@ -102,16 +102,12 @@ while true; do
                         if grep -E '^[[:space:]]*UVICORN_SSL_CERTFILE[[:space:]]*=' /opt/marzban/.env; then
                             sed -i 's|^[[:space:]]*UVICORN_SSL_CERTFILE[[:space:]]*=|#UVICORN_SSL_CERTFILE|' /opt/marzban/.env
                             echo "Commented out UVICORN_SSL_CERTFILE line."
-                        else
-                            echo "No UVICORN_SSL_CERTFILE line found."
                         fi
 
                         # Comment out any line that starts with UVICORN_SSL_KEYFILE (handling spaces before and after the variable)
                         if grep -E '^[[:space:]]*UVICORN_SSL_KEYFILE[[:space:]]*=' /opt/marzban/.env; then
                             sed -i 's|^[[:space:]]*UVICORN_SSL_KEYFILE[[:space:]]*=|#UVICORN_SSL_KEYFILE|' /opt/marzban/.env
                             echo "Commented out UVICORN_SSL_KEYFILE line."
-                        else
-                            echo "No UVICORN_SSL_KEYFILE line found."
                         fi
 
                         # Append the new lines at the end of the file
