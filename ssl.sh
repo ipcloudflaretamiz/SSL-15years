@@ -21,11 +21,10 @@ while true; do
     case $choice in
         1)
             echo "OK - You selected 3X-UI"
-           
+
             mkdir -p /root/certs
             echo "Folder /root/certs created (if it didn't already exist)."
 
-           
             while true; do
                 clear
                 echo "========================================"
@@ -50,7 +49,7 @@ while true; do
                         ;;
                     3)
                         echo "Returning to main menu..."
-                        break  
+                        break
                         ;;
                     *)
                         echo "Invalid choice! Please select a number between 1 and 3."
@@ -61,11 +60,10 @@ while true; do
             ;;
         2)
             echo "OK - You selected Marzban"
-            
+
             mkdir -p /var/lib/marzban/certs
             echo "Folder /var/lib/marzban/certs created (if it didn't already exist)."
 
-           
             while true; do
                 clear
                 echo "========================================"
@@ -98,15 +96,15 @@ while true; do
                             touch /opt/marzban/.env
                         fi
 
-                        # Comment out any line that starts with UVICORN_SSL_CERTFILE (handling spaces before and after the variable)
+                        # Comment out any line that starts with UVICORN_SSL_CERTFILE (preserving full line)
                         if grep -E '^[[:space:]]*UVICORN_SSL_CERTFILE[[:space:]]*=' /opt/marzban/.env; then
-                            sed -i 's|^[[:space:]]*UVICORN_SSL_CERTFILE[[:space:]]*=|#UVICORN_SSL_CERTFILE|' /opt/marzban/.env
+                            sed -i 's|^[[:space:]]*\(UVICORN_SSL_CERTFILE[[:space:]]*=.*\)|#\1|' /opt/marzban/.env
                             echo "Commented out UVICORN_SSL_CERTFILE line."
                         fi
 
-                        # Comment out any line that starts with UVICORN_SSL_KEYFILE (handling spaces before and after the variable)
+                        # Comment out any line that starts with UVICORN_SSL_KEYFILE (preserving full line)
                         if grep -E '^[[:space:]]*UVICORN_SSL_KEYFILE[[:space:]]*=' /opt/marzban/.env; then
-                            sed -i 's|^[[:space:]]*UVICORN_SSL_KEYFILE[[:space:]]*=|#UVICORN_SSL_KEYFILE|' /opt/marzban/.env
+                            sed -i 's|^[[:space:]]*\(UVICORN_SSL_KEYFILE[[:space:]]*=.*\)|#\1|' /opt/marzban/.env
                             echo "Commented out UVICORN_SSL_KEYFILE line."
                         fi
 
@@ -126,7 +124,7 @@ while true; do
                         ;;
                     4)
                         echo "Returning to main menu..."
-                        break  
+                        break
                         ;;
                     *)
                         echo "Invalid choice! Please select a number between 1 and 4."
@@ -137,11 +135,10 @@ while true; do
             ;;
         3)
             echo "OK - You selected Marzneshin"
-            
+
             mkdir -p /var/lib/marzneshin/certs
             echo "Folder /var/lib/marzneshin/certs created (if it didn't already exist)."
 
-            
             while true; do
                 clear
                 echo "========================================"
@@ -166,7 +163,7 @@ while true; do
                         ;;
                     3)
                         echo "Returning to main menu..."
-                        break  
+                        break
                         ;;
                     *)
                         echo "Invalid choice! Please select a number between 1 and 3."
