@@ -184,9 +184,9 @@ while true; do
                         fi
 
                        
-                        echo 'UVICORN_SSL_CERTFILE="/var/lib/marzneshin/certs/cert.crt"' >> /opt/marzneshin/.env
+                        echo 'UVICORN_SSL_CERTFILE="/var/lib/marzneshin/certs/cert.crt"' >> /etc/opt/marzneshin/.env
                         echo "Added new UVICORN_SSL_CERTFILE at the end of the file."
-                        echo 'UVICORN_SSL_KEYFILE="/var/lib/marzneshin/certs/private.key"' >> /opt/marzneshin/.env
+                        echo 'UVICORN_SSL_KEYFILE="/var/lib/marzneshin/certs/private.key"' >> /etc/opt/marzneshin/.env
                         echo "Added new UVICORN_SSL_KEYFILE at the end of the file."
 
                         echo "SSL settings updated successfully."
