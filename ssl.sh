@@ -147,26 +147,62 @@ while true; do
                 echo "Please select a file to edit:"
                 echo "1) cert.crt (/var/lib/marzneshin/certs/cert.crt)"
                 echo "2) private.key (/var/lib/marzneshin/certs/private.key)"
-                echo "3) Back to main menu"
+                echo "3) Update SSL settings (/opt/marzneshin/.env)"
+                echo "4) Back to main menu"
                 echo "========================================"
 
-                read -p "Enter your choice (1-3): " subchoice
+                read -p "Enter your choice (1-4): " subchoice
 
                 case $subchoice in
                     1)
                         echo "Opening nano /var/lib/marzneshin/certs/cert.crt..."
-                        nano /var/lib/marzban/certs/cert.crt
+                        nano /var/lib/marzneshin/certs/cert.crt
                         ;;
                     2)
                         echo "Opening nano /var/lib/marzneshin/certs/private.key..."
-                        nano /var/lib/marzban/certs/private.key
+                        nano /var/lib/marzneshin/certs/private.key
                         ;;
                     3)
+                        echo "Updating SSL settings in /opt/marzneshin/.env..."
+                        # Check if the file exists, if not create it
+                        if [ ! -f /opt/marzneshin/.env ]; then
+                            echo "File /opt/marzneshin/.env does not exist. Creating it..."
+                            mkdir -p /opt/marzneshin
+                            touch /opt/marzneshin/.env
+                        fi
+
+                        # Comment out any line that starts with UVICORN_SSL_CERTFILE (preserving full line)
+                        if grep -E '^[[:space:]]*UVICORN_SSL_CERTFILE[[:space:]]*=' /opt/marzneshin/.env; then
+                            sed -i 's|^[[:space:]]*\(UVICORN_SSL_CERTFILE[[:space:]]*=.*\)|#\1|' /opt/marzneshin/.env
+                            echo "Commented out UVICORN_SSL_CERTFILE line."
+                        fi
+
+                        # Comment out any line that starts with UVICORN_SSL_KEYFILE (preserving full line)
+                        if grep -E '^[[:space:]]*UVICORN_SSL_KEYFILE[[:space:]]*=' /opt/marzneshin/.env; then
+                            sed -i 's|^[[:space:]]*\(UVICORN_SSL_KEYFILE[[:space:]]*=.*\)|#\1|' /opt/marzneshin/.env
+                            echo "Commented out UVICORN_SSL_KEYFILE line."
+                        fi
+
+                        # Append the new lines at the end of the file
+                        echo 'UVICORN_SSL_CERTFILE="/var/lib/marzneshin/certs/cert.crt"' >> /opt/marzneshin/.env
+                        echo "Added new UVICORN_SSL_CERTFILE at the end of the file."
+                        echo 'UVICORN_SSL_KEYFILE="/var/lib/marzneshin/certs/private.key"' >> /opt/marzneshin/.env
+                        echo "Added new UVICORN_SSL_KEYFILE at the end of the file."
+
+                        echo "SSL settings updated successfully."
+
+                        # Restart Marzneshin after updating
+                        echo "Restarting Marzneshin..."
+                        marzneshin restart
+                        echo "Marzneshin restarted successfully."
+                        read -p "Press Enter to continue..."
+                        ;;
+                    4)
                         echo "Returning to main menu..."
                         break
                         ;;
                     *)
-                        echo "Invalid choice! Please select a number between 1 and 3."
+                        echo "Invalid choice! Please select a number between 1 and 4."
                         read -p "Press Enter to continue..."
                         ;;
                 esac
