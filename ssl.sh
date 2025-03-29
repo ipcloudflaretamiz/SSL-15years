@@ -13,7 +13,7 @@ display_main_menu() {
     echo "========================================"
 }
 
-# Main loop
+
 while true; do
     display_main_menu
     read -p "Enter your choice (1-4): " choice
@@ -83,7 +83,7 @@ while true; do
                     3)
                         echo "Updating SSL settings in /opt/marzban/.env..."
                         
-                        # Ask for port
+                        
                         read -p "Enter the port number for Marzban (e.g., 2083): " MARZBAN_PORT
                         
                         if [ ! -f /opt/marzban/.env ]; then
@@ -104,7 +104,7 @@ while true; do
                         echo 'UVICORN_SSL_KEYFILE="/var/lib/marzban/certs/private.key"' >> /opt/marzban/.env
                         echo "Added new UVICORN_SSL_KEYFILE at the end of the file."
 
-                        # Update UVICORN_PORT in .env
+                        
                         echo "UVICORN_PORT=$MARZBAN_PORT" >> /opt/marzban/.env
                         echo "Set UVICORN_PORT to $MARZBAN_PORT"
 
@@ -154,7 +154,7 @@ while true; do
                     3)
                         echo "Updating SSL settings in /etc/opt/marzneshin/.env..."
                         
-                        # Ask for port
+                        
                         read -p "Enter the port number for Marzneshin (e.g., 2083): " MARZNESHIN_PORT
                         
                         if [ ! -f /etc/opt/marzneshin/.env ]; then
@@ -175,7 +175,7 @@ while true; do
                         echo 'UVICORN_SSL_KEYFILE="/var/lib/marzneshin/certs/private.key"' >> /etc/opt/marzneshin/.env
                         echo "Added new UVICORN_SSL_KEYFILE at the end of the file."
 
-                        # Update UVICORN_PORT in .env
+                       
                         echo "UVICORN_PORT=$MARZNESHIN_PORT" >> /etc/opt/marzneshin/.env
                         echo "Set UVICORN_PORT to $MARZNESHIN_PORT"
 
