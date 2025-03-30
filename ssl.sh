@@ -13,7 +13,7 @@ display_main_menu() {
     echo "========================================"
 }
 
-# Main loop
+
 while true; do
     display_main_menu
     read -p "Enter your choice (1-4): " choice
@@ -83,7 +83,7 @@ while true; do
                     3)
                         echo "Updating SSL settings in /opt/marzban/.env..."
                         
-                        # Ask for port
+                        
                         read -p "Enter New the port number for Marzban (443 | 2053 | 2083 | 2087 | 2096 | 8443): " MARZBAN_PORT
                         
                         if [ ! -f /opt/marzban/.env ]; then
@@ -92,20 +92,20 @@ while true; do
                             touch /opt/marzban/.env
                         fi
 
-                        # Comment out previous port if exists
+                        
                         if grep -E '^[[:space:]]*UVICORN_PORT[[:space:]]*=' /opt/marzban/.env; then
                             sed -i 's|^[[:space:]]*\(UVICORN_PORT[[:space:]]*=.*\)|#\1|' /opt/marzban/.env
                             echo "Commented out UVICORN_PORT line."
                         fi
 
-                        # Add space before equal sign for UVICORN_PORT
+                       
                         sed -i 's|^[[:space:]]*\(UVICORN_PORT[[:space:]]*=[[:space:]]*\)|UVICORN_PORT = |' /opt/marzban/.env
 
-                        # Update the UVICORN_PORT
+                        
                         echo "UVICORN_PORT = $MARZBAN_PORT" >> /opt/marzban/.env
                         echo "Set UVICORN_PORT to $MARZBAN_PORT"
 
-                        # Add SSL details
+                      
                         if grep -E '^[[:space:]]*UVICORN_SSL_CERTFILE[[:space:]]*=' /opt/marzban/.env; then
                             sed -i 's|^[[:space:]]*\(UVICORN_SSL_CERTFILE[[:space:]]*=.*\)|#\1|' /opt/marzban/.env
                             echo "Commented out UVICORN_SSL_CERTFILE line."
@@ -165,7 +165,7 @@ while true; do
                     3)
                         echo "Updating SSL settings in /etc/opt/marzneshin/.env..."
                         
-                        # Ask for port
+                      
                         read -p "Enter New the port number for Marzneshin (443 | 2053 | 2083 | 2087 | 2096 | 8443): " MARZNESHIN_PORT
                         
                         if [ ! -f /etc/opt/marzneshin/.env ]; then
@@ -174,20 +174,20 @@ while true; do
                             touch /etc/opt/marzneshin/.env
                         fi
 
-                        # Comment out previous port if exists
+                       
                         if grep -E '^[[:space:]]*UVICORN_PORT[[:space:]]*=' /etc/opt/marzneshin/.env; then
                             sed -i 's|^[[:space:]]*\(UVICORN_PORT[[:space:]]*=.*\)|#\1|' /etc/opt/marzneshin/.env
                             echo "Commented out UVICORN_PORT line."
                         fi
 
-                        # Add space before equal sign for UVICORN_PORT
+                     
                         sed -i 's|^[[:space:]]*\(UVICORN_PORT[[:space:]]*=[[:space:]]*\)|UVICORN_PORT = |' /etc/opt/marzneshin/.env
 
-                        # Update the UVICORN_PORT
+                   
                         echo "UVICORN_PORT = $MARZNESHIN_PORT" >> /etc/opt/marzneshin/.env
                         echo "Set UVICORN_PORT to $MARZNESHIN_PORT"
 
-                        # Add SSL details
+                  
                         if grep -E '^[[:space:]]*UVICORN_SSL_CERTFILE[[:space:]]*=' /etc/opt/marzneshin/.env; then
                             sed -i 's|^[[:space:]]*\(UVICORN_SSL_CERTFILE[[:space:]]*=.*\)|#\1|' /etc/opt/marzneshin/.env
                             echo "Commented out UVICORN_SSL_CERTFILE line."
