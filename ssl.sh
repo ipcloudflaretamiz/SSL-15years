@@ -84,7 +84,7 @@ while true; do
                         echo "Updating SSL settings in /opt/marzban/.env..."
                         
                         # Ask for port
-                        read -p "Enter the port number for Marzban (e.g., 2083): " MARZBAN_PORT
+                        read -p "Enter the port number for Marzban (443 | 2053 | 2083 | 2087 | 2096 | 8443): " MARZBAN_PORT
                         
                         if [ ! -f /opt/marzban/.env ]; then
                             echo "File /opt/marzban/.env does not exist. Creating it..."
@@ -166,7 +166,7 @@ while true; do
                         echo "Updating SSL settings in /etc/opt/marzneshin/.env..."
                         
                         # Ask for port
-                        read -p "Enter the port number for Marzneshin (e.g., 2083): " MARZNESHIN_PORT
+                        read -p "Enter the port number for Marzneshin (443 | 2053 | 2083 | 2087 | 2096 | 8443): " MARZNESHIN_PORT
                         
                         if [ ! -f /etc/opt/marzneshin/.env ]; then
                             echo "File /opt/marzneshin/.env does not exist. Creating it..."
